@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1>{{ UserIP }}さん {{ Aisatsu }}</h1>
+
+    <p><a href="/time">現在の時刻は？</a></p>
+
+    <p>アクセスカウンター：{{ AccessCount }}</p>
+    {% if AccessCount % 10 == 0: %}
+        <p>キリ番おめでとうございます</p>
+    {% else: %}
+    
+    {% endif %}
+    
+    
+
+{% endblock %}
