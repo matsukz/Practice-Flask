@@ -2,15 +2,16 @@
 {% block content %}
 
 <h2>現在の日付</h2>
-    <p>本日は令和{{ toshi }}年 {{ month }}月 {{ day }}日 {{ youbi }} です。
+    <p>本日は令和{{ now.year - 2018 }}年 {{ now.month }}月 {{ now.day }}日 {{ youbi }} です。
 
 <h2>現在時刻</h2>
-    <p>現在時刻は{{ noon }}{{ hour }}時{{ min }}分です。</p>
+
+    <p>現在時刻は{{ noon }}{{ hour }}時{{ now.minute }}分です。</p>
 
 <h2>コメント</h2>
-    {% if hour_ex < 4: %}
+    {% if now.hour < 4: %}
         <p>早く寝なさい</p>
-    {% elif hour_ex < 20: %}
+    {% elif now.hour < 20: %}
         <p>今日も一日ご苦労さまです。</p>
         <p>水分補給を忘れずご安全に。</p>
     {% else: %}
