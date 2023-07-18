@@ -4,6 +4,7 @@
 <h1>{{ UserIP }}さん {{ Aisatsu }}</h1>
 
     <p><a href="/time">現在の時刻は？</a></p>
+    <p><a href="/task">課題一覧</a></p>
 
     <p>アクセスカウンター：{{ AccessCount }}</p>
     {% if AccessCount % 10 == 0: %}
@@ -11,7 +12,5 @@
     {% else: %}
     
     {% endif %}
-    
-    
 
 {% endblock %}
