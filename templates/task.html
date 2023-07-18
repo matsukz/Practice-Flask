@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>課題登録</h2>
+
+<form action ="/task" method="post">
+    <label for="Date">期日</label>
+    <input type="date" name="Date">
+    <p></p>
+
+    <label for="KadaiName">科目名</label>
+    <select name="Kamoku">
+    {% for Kamoku in KamokuList %}
+        <option value="{{ Kamoku }}">{{ Kamoku }}</option>
+    {% endfor %}
+    </select>
+    <p></p>
+
+    <label for="Naiyou">内容</label>
+    <input type="text" name="Naiyou">
+    <p></p>
+
+    <button type="submit">登録</button>
+    <p>{{ BlankError }}</p>
+</form>
+
+<h2>課題一覧</h2>
+<table>
+    <tr><th>期日</th><th>科目</th><th>内容</th></tr>
+    {% for line in lines: %}
+        {% set colum = line.rstrip().split(",") %}
+        <tr>
+            {% for item in colum: %}
+                <td>{{ item }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
