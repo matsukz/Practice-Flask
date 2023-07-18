@@ -1,14 +1,17 @@
 #Flask main Module
-from flask import Flask, render_template
+from flask import Flask, redirect ,render_template
 app = Flask(__name__)
+app.debug = True
 
 # Flask Get IP Addr
 from flask import request
 
 # User Addr
 import datetime
+import codecs
 
 AccessCount = 0
+BlankError = ""
 
 @app.route("/")
 def route():
@@ -57,15 +60,49 @@ def comment():
     return render_template(
         "time.html",
         title = "現在の時間は？",
-        toshi = now.year - 2018,
-        month = now.month,
-        day = now.day,
+        now = now,
         youbi = youbilist[now.weekday()],
         noon = noon,
-        hour = hour,
-        hour_ex = now.hour,
-        min = now.minute
+        hour = hour
     )
 
+@app.route("/task", methods=["GET","POST"])
+def task():
 
+    global BlankError
 
+    KamokuList = []
+    Kamokutxt = codecs.open("EtcTxt\\kamoku.txt","r","utf-8")
+    for item in Kamokutxt.readlines():
+        KamokuList.append(item.rstrip())
+
+    file = codecs.open("EtcTxt\\task.txt","r","utf-8")
+    lines = file.readlines()
+    file.close()
+
+    if request.method == "POST":
+        date = request.form["Date"]
+        Kamoku = request.form["Kamoku"]
+        Naiyou = request.form["Naiyou"]
+
+        if date != "" or Naiyou != "":
+            
+            file = codecs.open("EtcTxt\\task.txt","a","utf-8")
+            file.write(date + "," + Kamoku + "," + Naiyou + "\n")
+            file.close()
+            BlankError = ""
+        else:
+            BlankError = "空欄があります"
+
+        return redirect("/task")
+
+    else:
+        pass
+
+    return render_template(
+        "task.html",
+        title = "タスク",
+        KamokuList = KamokuList,
+        lines = lines,
+        BlankError = BlankError
+    )
